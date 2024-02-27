@@ -1,0 +1,5 @@
+sudo apt-get update
+sudo apt install docker.io
+sudo usermod -a -G docker
+docker build . -t app-node-demo
+docker run -d -p 8000:8000 app-node-demo
