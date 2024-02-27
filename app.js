@@ -1,31 +1,11 @@
-const http = require('http');
-
-const hostname = '0.0.0.0';
-const port = 8000;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, World!\n');
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
-
-// Gracefully exit after a certain period of time (e.g., 60 seconds)
-setTimeout(() => {
-  console.log('Exiting application...');
-  process.exit(0);
-}, 60000); // Change the timeout value as needed
-
 const express = require('express'),
     bodyParser = require('body-parser'),
     // In order to use PUT HTTP verb to edit item
     methodOverride = require('method-override'),
     // Mitigate XSS using sanitizer
     sanitizer = require('sanitizer'),
-    app = express()
+    app = express(),
+    port = 8000
 
 app.use(bodyParser.urlencoded({
     extended: false
