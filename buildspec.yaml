@@ -1,5 +1,17 @@
-sudo apt-get update
-sudo apt install docker.io
-sudo usermod -a -G docker
-docker build . -t app-node-demo
-docker run -d -p 8000:8000 app-node-demo
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - apt update
+      - apt install -y nodejs npm
+
+  pre_build:
+    commands:
+      - npm install
+
+  build:
+    commands:
+      - node app.js
