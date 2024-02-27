@@ -15,3 +15,6 @@ phases:
   build:
     commands:
       - node app.js
+artifacts:
+  files:
+    - '**/*'
