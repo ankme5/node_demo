@@ -7,4 +7,5 @@ cd /var/www/my-nodejs-app
 # npm install
 
 # Start the Node.js server
-node app.js
+node app.js &
+sleep 10
