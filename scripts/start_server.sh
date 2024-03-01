@@ -8,3 +8,5 @@ cd /var/www/my-nodejs-app
 
 # Start the Node.js server
 node app.js &
+
+exit
