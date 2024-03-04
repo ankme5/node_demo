@@ -2,11 +2,4 @@
 
 # Navigate to the directory where your Node.js application is located
 cd /var/www/my-nodejs-app
-
-# Install dependencies (if needed)
-# npm install
-
-# Start the Node.js server
-node app.js &
-
-exit
+docker run -d -p 8000:8000 jenkins-node-app
