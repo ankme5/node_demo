@@ -1,40 +1,31 @@
-pipeline {
-    agent { label "dev-server"}
-    
-    stages {
-        
-        stage("code"){
+pipeline{
+    agent any
+    stages{
+        stage("cloning){
+              steps{
+                    git url : "https://github.com/ankme5/node_demo", branch : "docker"
+              }
+        }
+        stage("building"){
             steps{
-                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
-                echo 'bhaiyya code clone ho gaya'
+                sh "docker build -t docker-node-app"
             }
         }
-        stage("build and test"){
+        stage("pushing"){
             steps{
-                sh "docker build -t node-app-test-new ."
-                echo 'code build bhi ho gaya'
-            }
-        }
-        stage("scan image"){
-            steps{
-                echo 'image scanning ho gayi'
-            }
-        }
-        stage("push"){
-            steps{
-                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                sh "docker tag node-app-test-new:latest ${env.dockerHubUser}/node-app-test-new:latest"
-                sh "docker push ${env.dockerHubUser}/node-app-test-new:latest"
-                echo 'image push ho gaya'
+                withCredentials([usernamePassword(credentialsId: "", passwordVariable: "", usernameVariable: "")]){
+                    sh "docker login -u ${env.dockerUser} -p ${env.dockerPass}"
+                    sh "docker tag docker-node-app:latest ${env.dockerUser}/docker-node-app:latest"
+                    sh "docker push ${env.dockerUser}/docker-node-app:latest"
                 }
             }
         }
-        stage("deploy"){
+        stage("deploying"){
             steps{
-                sh "docker-compose down && docker-compose up -d"
-                echo 'deployment ho gayi'
+                sh "docker-compose down && docker compose up -d"
             }
         }
+              
+              
     }
 }
